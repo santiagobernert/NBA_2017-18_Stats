@@ -4,9 +4,9 @@ class Jugador:
                     dobles_p, efg, tl_m, tl_i, tl_p, rebo, rebd, reb, ast, rob, tap, perd, pf, pts):
         self.rank = rank
         self.nombre = nombre[:-10]
-        self.pts = pts
-        self.reb = reb
-        self.ast = ast
+        self.pts = str(pts) + 'p'
+        self.reb = str(reb) + 'r'
+        self.ast = str(ast) + 'a'
         self.pos = pos
         self.edad = edad
         self.equipo = equipo
@@ -32,6 +32,3 @@ class Jugador:
         self.tap = tap
         self.perd = perd
         self.pf = pf
-        # self.ppg = int(pts)/int(partidos)
-        # self.apg = int(ast)/int(partidos)
-        # self.rpg = int(reb)/int(partidos)
