@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/nba.css">
+    <link rel="shortcut icon" href="static/imgs/NBA-logo.png" type="image/x-icon">
+    <title>NBA</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="static/imgs/NBA-logo.png" alt="" width="50" height="24" class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="inicio" id="inicio">
+        <h2 class="titulo izq">Temporada 2017-2018</h2>
+        <div class="card-group">
+            <div class="card">
+                <h4>DPOY</h4>
+              <img src="static/imgs/davis.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Anthony Davis</h5>
+                <div class="row">
+                  <div class="col">
+                    <h5 class="stats" id="ppg-davis">PPG</h5>
+                  </div>
+                  <div class="col">
+                    <h5 class="stats" id="apg-davis">APG</h5>
+                  </div>
+                  <div class="col">
+                    <h5 class="stats" id="rpg-davis">RPG</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+                <h4>MVP</h4>
+              <img src="static/imgs/harden.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">James Harden</h5>
+                <div class="row">
+                  <div class="col">
+                    <h5 class="stats" id="ppg-harden">PPG</h5>
+                  </div>
+                  <div class="col">
+                    <h5 class="stats" id="apg-harden">APG</h5>
+                  </div>
+                  <div class="col">
+                    <h5 class="stats" id="rpg-harden">RPG</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+                <h4>CHAMPIONS</h4>
+              <img src="static/imgs/warriors.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">WARRIORS</h5>
+                <p class="card-text">73-9</p>
+              </div>
+            </div>
+            <div class="card">
+                <h4>MIP</h4>
+                <img src="static/imgs/drose.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Derrick Rose</h5>
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="stats" id="ppg-drose">PPG</h5>
+                    </div>
+                    <div class="col">
+                      <h5 class="stats" id="apg-drose">APG</h5>
+                    </div>
+                    <div class="col">
+                      <h5 class="stats" id="rpg-drose">RPG</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                  <h4>ROTY</h4>
+                <img src="static/imgs/ben simmons.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Ben Simmons</h5>
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="stats" id="ppg-bensimmons">PPG</h5>
+                    </div>
+                    <div class="col">
+                      <h5 class="stats" id="apg-bensimmons">APG</h5>
+                    </div>
+                    <div class="col">
+                      <h5 class="stats" id="rpg-bensimmons">RPG</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+    </div>
+    <div class="buscar row" id="buscar">
+        <h2 class="titulo izq">Buscar jugador</h2>
+        <div class="col text-start" style="padding-left: 5vw;">
+            <h4>Nombre</h4>
+            <input type="search" class="form-control ds-input" id="search-input" placeholder="Buscar jugador..." aria-label="Search docs for..." autocomplete="off" data-bd-docs-version="5.1" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" dir="auto" style="width: 100%;position: relative; vertical-align: top;">
+          </div>
+        <div class="col col-lg-2">
+            <h4>Posicion</h4>
+            <div class="dropdown">
+              <select id="sel-posicion" class="form-select" aria-label="Default select example">
+                <ul class="dropdown-menu">
+                  <option selected>Todas</option>
+                  <option value="Base">Base</option>
+                  <option value="Escolta">Escolta</option>
+                  <option value="Alero">Alero</option>
+                  <option value="Ala-Pivot">Ala-Pivot</option>
+                  <option value="Pivot">Pivot</option>
+                </ul>
+              </select>
+              </div>
+        </div>
+        <div class="col text-start">
+            <h4>Equipo</h4>
+            <div class="dropdown">
+                <input value="Todos" list="equipos_list" onkeyup="server.buscar_equipo()" type="search" class="form-control ds-input" id="equipo-search-input" placeholder="Buscar equipo..." aria-label="Search docs for..." autocomplete="off" data-bd-docs-version="5.1" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" dir="auto" style="min-width: 20vw; width: 100%;position: relative; vertical-align: top;">
+                <datalist id="equipos_list">
+                  <option selected>Todos</option>
+                  <option value="Atlanta Hawks" id="ATL" class="dropdown-item" href="#"></option>
+                  <option value="Boston Celtics" id="BOS" class="dropdown-item" href="#"></option>
+                  <option value="Brooklyn Nets" id="BRK" class="dropdown-item" href="#"></option>
+                  <option value="Charlotte Hornets" id="CHO" class="dropdown-item" href="#"></option>
+                  <option value="Chicago Bulls" id="CHI" class="dropdown-item" href="#"></option>
+                  <option value="Cleveland Cavaliers" id="CLE" class="dropdown-item" href="#"></option>
+                  <option value="Dallas Mavericks" id="DAL" class="dropdown-item" href="#"></option>
+                  <option value="Denver Nuggets" id="DEN" class="dropdown-item" href="#"></option>
+                  <option value="Detroit Pistons" id="DET" class="dropdown-item" href="#"></option>
+                  <option value="Golden State Warriors" id="GSW" class="dropdown-item" href="#"></option>
+                  <option value="Houston Rockets" id="HOU" class="dropdown-item" href="#"></option>
+                  <option value="Indiana Pacers" id="IND" class="dropdown-item" href="#"></option>
+                  <option value="Los Angeles Clippers" id="LAC" class="dropdown-item" href="#"></option>
+                  <option value="Los Angeles Lakers" id="LAL" class="dropdown-item" href="#"></option>
+                  <option value="Memphis Grizzlies" id="MEM" class="dropdown-item" href="#"></option>
+                  <option value="Miami Heat" id="MIA" class="dropdown-item" href="#"></option>
+                  <option value="Milwaukee Bucks" id="MIL" class="dropdown-item" href="#"></option>
+                  <option value="Minnesota Timberwolves" id="MIN" class="dropdown-item" href="#"></option>
+                  <option value="New Orleans Pelicans" id="NOP" class="dropdown-item" href="#"></option>
+                  <option value="New York" id="NYK" class="dropdown-item" href="#"></option>
+                  <option value="Oklahoma Thunder" id="OKC" class="dropdown-item" href="#"></option>
+                  <option value="Orlando Magic" id="ORL" class="dropdown-item" href="#"></option>
+                  <option value="Philadelphia 76ers" id="PHI" class="dropdown-item" href="#"></option>
+                  <option value="Phoenix Suns" id="PHO" class="dropdown-item" href="#"></option>
+                  <option value="Portland Trail Blazers" id="POR" class="dropdown-item" href="#"></option>
+                  <option value="Sacramento Kings" id="SAC" class="dropdown-item" href="#"></option>
+                  <option value="San Antonio Spurs" id="SAS" class="dropdown-item" href="#"></option>
+                  <option value="Toronto Raptors" id="TOR" class="dropdown-item" href="#"></option>
+                  <option value="Utah Jazz" id="UTH" class="dropdown-item" href="#"></option>
+                  <option value="Washington Wizards" id="WAS" class="dropdown-item" href="#"></option>
+                </datalist>
+              </div>
+        </div>
+        <div class="col">
+          <button onclick="server.buscar_jugador()" id="buscador" name="buscar_jugadores_btn" type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+        <div class="margin">
+          <div class="row">
+            <div class="col jug arri">
+              <div class="row">
+                <h5 id="nombre_jugador_1" class="col nombre-jug">{{nombre_jugador}}</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg1">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg1">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg1">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col jug">
+              <div class="row">
+                <h5 id="nombre_jugador_2" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg2">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg2">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg2">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col jug arrd">
+              <div class="row">
+                <h5 id="nombre_jugador_3" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg3">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg3">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg3">RPG</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col jug">
+              <div class="row">
+                <h5 id="nombre_jugador_4" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg4">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg4">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg4">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col jug">
+              <div class="row">
+                <h5 id="nombre_jugador_5" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg5">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg5">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg5">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col jug">
+              <div class="row">
+                <h5 id="nombre_jugador_6" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg6">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg6">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg6">RPG</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col jug abi">
+              <div class="row">
+                <h5 id="nombre_jugador_7" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg7">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg7">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg7">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col jug">
+              <div class="row">
+                <h5 id="nombre_jugador_8" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg8">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg8">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg8">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col jug abd">
+              <div class="row">
+                <h5 id="nombre_jugador_9" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg9">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg9">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg9">RPG</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="equipos" id="equipos">
+      <h2 class="titulo izq">Mejores equipos</h2>
+      <div class="row g-3">
+        <h4 class="col text-end">Mejor equipo por</h4>
+        <div class="dropdown col text-start">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Todas
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">PTS</a></li>
+            <li><a class="dropdown-item" href="#">AST</a></li>
+            <li><a class="dropdown-item" href="#">REB</a></li>
+            <li><a class="dropdown-item" href="#">STL</a></li>
+            <li><a class="dropdown-item" href="#">BLK</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col margin">
+          <img src="https://prod.chaseyoursport.com/blogImage/0.037280981170299876.jpeg" alt="" style="max-width: 35rem;">
+        </div>
+        <div class="col margin">
+          <div class="jug arr">
+            <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+          </div>
+          <div class="jug">
+            <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+          </div>
+          <div class="jug">
+            <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+          </div>
+          <div class="jug">
+            <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+          </div>
+          <div class="jug ab">
+            <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="lideres" id="lideres">
+        <h2 class="titulo izq">Lideres del año</h2>
+        <div class="row g-3">
+          <h4 class="col text-end">Lideres en</h4>
+          <div class="dropdown col text-start">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Todas
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">PTS</a></li>
+              <li><a class="dropdown-item" href="#">AST</a></li>
+              <li><a class="dropdown-item" href="#">REB</a></li>
+              <li><a class="dropdown-item" href="#">STL</a></li>
+              <li><a class="dropdown-item" href="#">BLK</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col cont">
+            <div class="jug arr">
+              <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="jug">
+              <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="jug">
+              <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="jug">
+              <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+            </div>
+            <div class="jug ab">
+              <div class="row">
+                <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h5 class="stats" id="ppg">PPG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="apg">APG</h5>
+                </div>
+                <div class="col">
+                  <h5 class="stats" id="rpg">RPG</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="btngroup-cont">
+      <div class="btn-group btngroup" role="group" aria-label="Basic example">
+        <button id="btn-inicio" type="button" class="btn btn-primary">Inicio</button>
+        <button id="btn-buscar" type="button" class="btn btn-primary">Buscar</button>
+        <button id="btn-equipos" type="button" class="btn btn-primary">Equipos</button>
+        <button id="btn-lideres" type="button" class="btn btn-primary">Lideres</button>
+      </div>
+    </div>
+    
+</div>
+
+
+
+<div class="container">
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <p class="col-md-4 mb-0 text-muted">© 2021 Company, Inc</p>
+
+    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+    <svg class="bi me-2" width="40" height="32"><use xlink:href="static/imgs/NBA-logo.png"></use></svg>
+    </a>
+
+    <ul class="nav col-md-4 justify-content-end">
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+    </ul>
+</footer>
+</div>
+<script src="static/nba.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

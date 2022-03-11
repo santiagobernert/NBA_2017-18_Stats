@@ -1,0 +1,89 @@
+html{
+    height: 100%;
+}
+body{
+    overflow-x: hidden; height: 100%; position: relative;
+}
+select{
+    background-color: white; color: black;
+}
+select:hover{
+    cursor: pointer; background-color: rgb(243, 243, 243);
+}
+select:focus{
+    box-shadow: 0 0 0 0.25rem rgba(223, 223, 223, 0.5);
+}
+option{
+    background-color: rgb(255, 255, 255);
+}
+option:hover{
+    background-color: rgb(170, 169, 169); cursor: pointer;
+}
+.main{
+    text-align: center; position: relative; width: 100%; height: 100%;
+}
+.titulo{
+    padding-top: 5vh; padding-bottom: 5vh;
+}
+.izq{
+    text-align: left; padding-left: 5vw;
+}
+.cont{
+    padding-left: 30vw; padding-right: 30vw; margin-top: 5vh; margin-bottom: 5vh;
+}
+.margin{
+    padding-left: 5vw; padding-right: 5vw; padding-top: 5vh; padding-bottom: 5vh;
+}
+.jug{
+    width: 100%; height: 10vh; border: solid grey 1px; align-items: center; align-content: center;
+}
+
+
+.stats{
+    font-weight: 400;
+}
+
+
+.inicio{
+    width:100%; position: absolute; left: 0; transition: 1.5s ease;
+}
+.buscar{
+    width:100%; position: absolute; left: 100%; transition: 1.5s ease;
+}
+.equipos{
+    width:100%; position: absolute; left: 200%; transition: 1.5s ease;
+}
+.lideres{
+    width:100%; position: absolute; left: 300%; transition: 1.5s ease;
+}
+.btngroup-cont{
+    position: absolute; right: 0; padding-right: 10vw; padding-top: 5vh;
+}
+
+.dd-equipos{
+    min-width: max-content;
+    text-align: center;
+}
+
+
+.arr{
+    border-top-left-radius: .6rem; border-top-right-radius: .6rem;
+}
+.ab{
+    border-bottom-left-radius: .6rem; border-bottom-right-radius: .6rem;
+}
+.arri{
+    border-top-left-radius: .6rem;
+}
+.arrd{
+    border-top-right-radius: .6rem;
+}
+.abi{
+    border-bottom-left-radius: .6rem;
+}
+.abd{
+    border-bottom-right-radius: .6rem;
+}
+.card{
+    border: none;
+}
