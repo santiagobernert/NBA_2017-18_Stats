@@ -187,7 +187,7 @@
           <div class="row">
             <div class="col jug arri" id="jug1">
               <div class="row">
-                <h5 id="nombre_jugador_1" class="col nombre-jug">{{nombre_jugador}}</h5>
+                <h5 id="nombre_jugador_1" class="col nombre-jug">Nombre del Jugador</h5>
               </div>
               <div class="row">
                 <div class="col">
@@ -350,6 +350,9 @@
             <li><a class="dropdown-item" href="#">REB</a></li>
             <li><a class="dropdown-item" href="#">STL</a></li>
             <li><a class="dropdown-item" href="#">BLK</a></li>
+            <li><a class="dropdown-item" href="#">FG%</a></li>
+            <li><a class="dropdown-item" href="#">3PM</a></li>
+            <li><a class="dropdown-item" href="#">3P%</a></li>
           </ul>
         </div>
       </div>
@@ -447,21 +450,23 @@
         <div class="row g-3">
           <h4 class="col text-end">Lideres en</h4>
           <div class="dropdown col text-start">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Todas
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">PTS</a></li>
-              <li><a class="dropdown-item" href="#">AST</a></li>
-              <li><a class="dropdown-item" href="#">REB</a></li>
-              <li><a class="dropdown-item" href="#">STL</a></li>
-              <li><a class="dropdown-item" href="#">BLK</a></li>
-            </ul>
+            <select onchange="server.buscar_lideres()" id="sel-estadistica" class="form-select" aria-label="Default select example">
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <option selected value="PTS">Puntos</option> 
+                <option value="AST">Asistencias</option> 
+                <option value="TRB">Rebotes</option> 
+                <option value="STL">Robos</option> 
+                <option value="BLK">Tapones</option> 
+                <option value="FG%">FG%</option> 
+                <option value="3P">3PM</option> 
+                <option value="3P%">3P%</option> 
+              </ul>
+          </select>
           </div>
         </div>
         <div class="row">
           <div class="col cont">
-            <div class="jug arr">
+            <div id="jugl1" class="jug arr">
               <div class="row">
                 <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
               </div>
@@ -477,7 +482,7 @@
                 </div>
               </div>
             </div>
-            <div class="jug">
+            <div id="jugl2" class="jug">
               <div class="row">
                 <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
               </div>
@@ -493,7 +498,7 @@
                 </div>
               </div>
             </div>
-            <div class="jug">
+            <div id="jugl3" class="jug">
               <div class="row">
                 <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
               </div>
@@ -509,7 +514,7 @@
                 </div>
               </div>
             </div>
-            <div class="jug">
+            <div id="jugl4" class="jug">
               <div class="row">
                 <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
               </div>
@@ -525,7 +530,7 @@
                 </div>
               </div>
             </div>
-            <div class="jug ab">
+            <div id="jugl5" class="jug ab">
               <div class="row">
                 <h5 id="nombre_jugador_" class="col nombre-jug">Nombre del Jugador</h5>
               </div>

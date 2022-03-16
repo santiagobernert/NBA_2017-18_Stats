@@ -2,7 +2,8 @@ from flask import Flask, render_template, request
 import jyserver.Flask as jsf
 from jugador import Jugador
 from bigdata import jugadores as jg, df
-from buscar import equipos, jugadores, pos
+from buscar import equipos, pos
+from lideres import lideres
 
 
 
@@ -14,296 +15,154 @@ app = Flask(__name__)
 @jsf.use(app)
 class App:
     def __init__(self):
-        pass
+        self.resultados_buscar = []
+        self.resultados_equipos = []
+        self.resultados_lideres = []
+
+    def mostrar_resultados(self, box_jugador, resultados_index, page, estadistica=''):
+        if page == 'b':
+            resultados = self.resultados_buscar
+        elif page == 'e':
+            resultados = self.resultados_equipos
+        elif page == 'l':
+            resultados = self.resultados_lideres
+        self.js.document.getElementById('jug'+ page + str(box_jugador)).style.visibility = 'visible'
+        self.js.document.getElementById('nombre_jugador_'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].nombre
+        self.js.document.getElementById('ppg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].pts
+        self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].ast
+        self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].reb
+
+        if estadistica == 'FG%':
+            if resultados[resultados_index].tiros_p >= resultados[resultados_index].ast:
+                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].tiros_p
+            else:
+                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].tiros_p
+        if estadistica == '3P':
+            if resultados[resultados_index].triples_m >= resultados[resultados_index].ast:
+                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_m
+            else:
+                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_m
+        if estadistica == '3P%':
+            if resultados[resultados_index].triples_p >= resultados[resultados_index].ast:
+                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_p
+            else:
+                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_p
+        if estadistica == 'BLK':
+            if resultados[resultados_index].blk >= resultados[resultados_index].ast:
+                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].blk
+            else:
+                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].blk
+        if estadistica == 'STL':
+            if resultados[resultados_index].stl >= resultados[resultados_index].ast:
+                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].stl
+            else:
+                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].stl
     
     def buscar_jugador(self):
-        resultados = []
-        resultados.clear()
+        self.resultados.clear()
         equipo = str(self.js.document.getElementById('equipo-search-input').value)
         posicion = str(self.js.document.getElementById('sel-posicion').value)
         nombre = str(self.js.document.getElementById('search-input').value)
 
         for i in range(1, 10):
-            self.js.document.getElementById(f'jug{i}').style.visibility = 'visible'
+            self.js.document.getElementById(f'jug{i}').style.visibility = 'hidden'
 
         for i in jg:
             if nombre != '' and nombre.upper() in i.nombre.upper():# and i.pos in pos[posicion] and equipos[equipo.lower()] in i.equipo:
                 if equipo != 'Todos' and equipos[equipo.lower()] in i.equipo:
-                    self.js.console.log(f'Jugador de {equipo} encontrado')
-                    self.js.console.log(i.nombre, i.pos, i.equipo, i.pts)
-                    resultados.append(i)
+                    self.resultados.append(i)
                 elif posicion != 'Todas' and i.pos in pos[posicion]:
-                    self.js.console.log(f'{posicion} encontrado')
-                    self.js.console.log(i.nombre, i.pos, i.equipo, i.pts)
-                    resultados.append(i)
+                    self.resultados.append(i)
                 elif posicion == 'Todas' and equipo == 'Todos':
-                    self.js.console.log('Jugador encontrado')
-                    self.js.console.log(i.nombre, i.pos, i.equipo, i.pts)
-                    resultados.append(i)
+                    self.resultados.append(i)
             elif nombre == '' and equipo != 'Todos' and equipos[equipo.lower()] in i.equipo and pos[posicion] in i.pos:
-                self.js.console.log(f'Todos los {posicion} de {equipo}')
-                self.js.console.log(i.nombre, i.pos, i.equipo, i.pts)
-                resultados.append(i)
+                self.resultados.append(i)
             elif nombre == '' and equipo != 'Todos' and equipos[equipo.lower()] in i.equipo and posicion == 'Todas':
-                self.js.console.log('Jugadores de: ', equipo)
-                self.js.console.log(i.nombre, i.pos, i.equipo, i.pts)
-                resultados.append(i)
+                self.resultados.append(i)
             elif nombre == '' and i.pos in pos[posicion]:
                 if equipo == 'Todos':
-                    self.js.console.log('Todos los ', posicion)
-                    self.js.console.log(i.nombre, i.pos, i.equipo, i.pts)
-                    resultados.append(i)
+                    self.resultados.append(i)
+
         
-        if len(resultados) == 0:
+        if len(self.resultados) == 0:
+            self.js.document.getElementById('jug2').style.visibility = 'visible'
             self.js.document.getElementById('nombre_jugador_2').innerHTML = 'No se encontró al jugador'
-            self.js.document.getElementById('ppg2').style.visibility = 'hidden'
-            self.js.document.getElementById('apg2').style.visibility = 'hidden'
-            self.js.document.getElementById('rpg2').style.visibility = 'hidden'
-            self.js.document.getElementById('jug1').style.visibility = 'hidden'
-            self.js.document.getElementById('jug3').style.visibility = 'hidden'
-            self.js.document.getElementById('jug4').style.visibility = 'hidden'
-            self.js.document.getElementById('jug5').style.visibility = 'hidden'
-            self.js.document.getElementById('jug6').style.visibility = 'hidden'
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug8').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
         
-        elif len(resultados) == 1:
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[0].reb
-            self.js.document.getElementById('jug1').style.visibility = 'hidden'
-            self.js.document.getElementById('jug3').style.visibility = 'hidden'
-            self.js.document.getElementById('jug4').style.visibility = 'hidden'
-            self.js.document.getElementById('jug5').style.visibility = 'hidden'
-            self.js.document.getElementById('jug6').style.visibility = 'hidden'
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug8').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 1:
+            self.mostrar_resultados(2, 0, 'b')
             
-        elif len(resultados) == 2:
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[1].reb
-            self.js.document.getElementById('jug1').style.visibility = 'hidden'
-            self.js.document.getElementById('jug3').style.visibility = 'hidden'
-            self.js.document.getElementById('jug4').style.visibility = 'hidden'
-            self.js.document.getElementById('jug6').style.visibility = 'hidden'
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug8').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 2:
+            self.mostrar_resultados(2, 0, 'b')
+            self.mostrar_resultados(5, 1, 'b')
                 
-        elif len(resultados) == 3:
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[1].reb
-            self.js.document.getElementById('nombre_jugador_8').innerHTML = resultados[2].nombre
-            self.js.document.getElementById('ppg8').innerHTML = resultados[2].pts
-            self.js.document.getElementById('apg8').innerHTML = resultados[2].ast
-            self.js.document.getElementById('rpg8').innerHTML = resultados[2].reb
-            self.js.document.getElementById('jug1').style.visibility = 'hidden'
-            self.js.document.getElementById('jug3').style.visibility = 'hidden'
-            self.js.document.getElementById('jug4').style.visibility = 'hidden'
-            self.js.document.getElementById('jug6').style.visibility = 'hidden'
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 3:
+            self.mostrar_resultados(2, 0, 'b')
+            self.mostrar_resultados(5, 1, 'b')
+            self.mostrar_resultados(8, 2, 'b')
 
-        elif len(resultados) == 4:
-            self.js.document.getElementById('nombre_jugador_1').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg1').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg1').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg1').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[1].reb
-            self.js.document.getElementById('nombre_jugador_3').innerHTML = resultados[2].nombre
-            self.js.document.getElementById('ppg3').innerHTML = resultados[2].pts
-            self.js.document.getElementById('apg3').innerHTML = resultados[2].ast
-            self.js.document.getElementById('rpg3').innerHTML = resultados[2].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[3].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[3].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[3].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[3].reb
-            self.js.document.getElementById('jug4').style.visibility = 'hidden'
-            self.js.document.getElementById('jug6').style.visibility = 'hidden'
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug8').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 4:
+            self.mostrar_resultados(1, 0, 'b')
+            self.mostrar_resultados(2, 1, 'b')
+            self.mostrar_resultados(3, 2, 'b')
+            self.mostrar_resultados(5, 3, 'b')
 
-        elif len(resultados) == 5:
-            self.js.document.getElementById('nombre_jugador_1').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg1').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg1').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg1').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[1].reb
-            self.js.document.getElementById('nombre_jugador_3').innerHTML = resultados[2].nombre
-            self.js.document.getElementById('ppg3').innerHTML = resultados[2].pts
-            self.js.document.getElementById('apg3').innerHTML = resultados[2].ast
-            self.js.document.getElementById('rpg3').innerHTML = resultados[2].reb
-            self.js.document.getElementById('nombre_jugador_4').innerHTML = resultados[3].nombre
-            self.js.document.getElementById('ppg4').innerHTML = resultados[3].pts
-            self.js.document.getElementById('apg4').innerHTML = resultados[3].ast
-            self.js.document.getElementById('rpg4').innerHTML = resultados[3].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[4].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[4].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[4].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[4].reb
-            self.js.document.getElementById('jug6').style.visibility = 'hidden'
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug8').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 5:
+            self.mostrar_resultados(1, 0, 'b')
+            self.mostrar_resultados(2, 1, 'b')
+            self.mostrar_resultados(3, 2, 'b')
+            self.mostrar_resultados(4, 3, 'b')
+            self.mostrar_resultados(5, 4, 'b')
 
-        elif len(resultados) == 6:
-            self.js.document.getElementById('nombre_jugador_1').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg1').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg1').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg1').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[1].reb
-            self.js.document.getElementById('nombre_jugador_3').innerHTML = resultados[2].nombre
-            self.js.document.getElementById('ppg3').innerHTML = resultados[2].pts
-            self.js.document.getElementById('apg3').innerHTML = resultados[2].ast
-            self.js.document.getElementById('rpg3').innerHTML = resultados[2].reb
-            self.js.document.getElementById('nombre_jugador_4').innerHTML = resultados[3].nombre
-            self.js.document.getElementById('ppg4').innerHTML = resultados[3].pts
-            self.js.document.getElementById('apg4').innerHTML = resultados[3].ast
-            self.js.document.getElementById('rpg4').innerHTML = resultados[3].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[4].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[4].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[4].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[4].reb
-            self.js.document.getElementById('nombre_jugador_6').innerHTML = resultados[5].nombre
-            self.js.document.getElementById('ppg6').innerHTML = resultados[5].pts
-            self.js.document.getElementById('apg6').innerHTML = resultados[5].ast
-            self.js.document.getElementById('rpg6').innerHTML = resultados[5].reb
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug8').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 6:
+            self.mostrar_resultados(1, 0, 'b')
+            self.mostrar_resultados(2, 1, 'b')
+            self.mostrar_resultados(3, 2, 'b')
+            self.mostrar_resultados(4, 3, 'b')
+            self.mostrar_resultados(5, 4, 'b')
+            self.mostrar_resultados(6, 5, 'b')
 
-        elif len(resultados) == 7:
-            self.js.document.getElementById('nombre_jugador_1').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg1').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg1').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg1').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[1].reb
-            self.js.document.getElementById('nombre_jugador_3').innerHTML = resultados[2].nombre
-            self.js.document.getElementById('ppg3').innerHTML = resultados[2].pts
-            self.js.document.getElementById('apg3').innerHTML = resultados[2].ast
-            self.js.document.getElementById('rpg3').innerHTML = resultados[2].reb
-            self.js.document.getElementById('nombre_jugador_4').innerHTML = resultados[3].nombre
-            self.js.document.getElementById('ppg4').innerHTML = resultados[3].pts
-            self.js.document.getElementById('apg4').innerHTML = resultados[3].ast
-            self.js.document.getElementById('rpg4').innerHTML = resultados[3].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[4].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[4].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[4].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[4].reb
-            self.js.document.getElementById('nombre_jugador_6').innerHTML = resultados[5].nombre
-            self.js.document.getElementById('ppg6').innerHTML = resultados[5].pts
-            self.js.document.getElementById('apg6').innerHTML = resultados[5].ast
-            self.js.document.getElementById('rpg6').innerHTML = resultados[5].reb
-            self.js.document.getElementById('nombre_jugador_8').innerHTML = resultados[6].nombre
-            self.js.document.getElementById('ppg8').innerHTML = resultados[6].pts
-            self.js.document.getElementById('apg8').innerHTML = resultados[6].ast
-            self.js.document.getElementById('rpg8').innerHTML = resultados[6].reb
-            self.js.document.getElementById('jug7').style.visibility = 'hidden'
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 7:
+            self.mostrar_resultados(1, 0, 'b')
+            self.mostrar_resultados(2, 1, 'b')
+            self.mostrar_resultados(3, 2, 'b')
+            self.mostrar_resultados(4, 3, 'b')
+            self.mostrar_resultados(5, 4, 'b')
+            self.mostrar_resultados(6, 5, 'b')
+            self.mostrar_resultados(8, 6, 'b')
 
-        elif len(resultados) == 8:
-            self.js.document.getElementById('nombre_jugador_1').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg1').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg1').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg1').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[1].reb
-            self.js.document.getElementById('nombre_jugador_3').innerHTML = resultados[2].nombre
-            self.js.document.getElementById('ppg3').innerHTML = resultados[2].pts
-            self.js.document.getElementById('apg3').innerHTML = resultados[2].ast
-            self.js.document.getElementById('rpg3').innerHTML = resultados[2].reb
-            self.js.document.getElementById('nombre_jugador_4').innerHTML = resultados[3].nombre
-            self.js.document.getElementById('ppg4').innerHTML = resultados[3].pts
-            self.js.document.getElementById('apg4').innerHTML = resultados[3].ast
-            self.js.document.getElementById('rpg4').innerHTML = resultados[3].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[4].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[4].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[4].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[4].reb
-            self.js.document.getElementById('nombre_jugador_6').innerHTML = resultados[5].nombre
-            self.js.document.getElementById('ppg6').innerHTML = resultados[5].pts
-            self.js.document.getElementById('apg6').innerHTML = resultados[5].ast
-            self.js.document.getElementById('rpg6').innerHTML = resultados[5].reb
-            self.js.document.getElementById('nombre_jugador_7').innerHTML = resultados[6].nombre
-            self.js.document.getElementById('ppg7').innerHTML = resultados[6].pts
-            self.js.document.getElementById('apg7').innerHTML = resultados[6].ast
-            self.js.document.getElementById('rpg7').innerHTML = resultados[6].reb
-            self.js.document.getElementById('nombre_jugador_8').innerHTML = resultados[7].nombre
-            self.js.document.getElementById('ppg8').innerHTML = resultados[7].pts
-            self.js.document.getElementById('apg8').innerHTML = resultados[7].ast
-            self.js.document.getElementById('rpg8').innerHTML = resultados[7].reb
-            self.js.document.getElementById('jug9').style.visibility = 'hidden'
+        elif len(self.resultados) == 8:
+            self.mostrar_resultados(1, 0, 'b')
+            self.mostrar_resultados(2, 1, 'b')
+            self.mostrar_resultados(3, 2, 'b')
+            self.mostrar_resultados(4, 3, 'b')
+            self.mostrar_resultados(5, 4, 'b')
+            self.mostrar_resultados(6, 5, 'b')
+            self.mostrar_resultados(7, 6, 'b')
+            self.mostrar_resultados(8, 7, 'b')
 
-        elif len(resultados) >= 9:
-            self.js.document.getElementById('nombre_jugador_1').innerHTML = resultados[0].nombre
-            self.js.document.getElementById('ppg1').innerHTML = resultados[0].pts
-            self.js.document.getElementById('apg1').innerHTML = resultados[0].ast
-            self.js.document.getElementById('rpg1').innerHTML = resultados[0].reb
-            self.js.document.getElementById('nombre_jugador_2').innerHTML = resultados[1].nombre
-            self.js.document.getElementById('ppg2').innerHTML = resultados[1].pts
-            self.js.document.getElementById('apg2').innerHTML = resultados[1].ast
-            self.js.document.getElementById('rpg2').innerHTML = resultados[1].reb
-            self.js.document.getElementById('nombre_jugador_3').innerHTML = resultados[2].nombre
-            self.js.document.getElementById('ppg3').innerHTML = resultados[2].pts
-            self.js.document.getElementById('apg3').innerHTML = resultados[2].ast
-            self.js.document.getElementById('rpg3').innerHTML = resultados[2].reb
-            self.js.document.getElementById('nombre_jugador_4').innerHTML = resultados[3].nombre
-            self.js.document.getElementById('ppg4').innerHTML = resultados[3].pts
-            self.js.document.getElementById('apg4').innerHTML = resultados[3].ast
-            self.js.document.getElementById('rpg4').innerHTML = resultados[3].reb
-            self.js.document.getElementById('nombre_jugador_5').innerHTML = resultados[4].nombre
-            self.js.document.getElementById('ppg5').innerHTML = resultados[4].pts
-            self.js.document.getElementById('apg5').innerHTML = resultados[4].ast
-            self.js.document.getElementById('rpg5').innerHTML = resultados[4].reb
-            self.js.document.getElementById('nombre_jugador_6').innerHTML = resultados[5].nombre
-            self.js.document.getElementById('ppg6').innerHTML = resultados[5].pts
-            self.js.document.getElementById('apg6').innerHTML = resultados[5].ast
-            self.js.document.getElementById('rpg6').innerHTML = resultados[5].reb
-            self.js.document.getElementById('nombre_jugador_7').innerHTML = resultados[6].nombre
-            self.js.document.getElementById('ppg7').innerHTML = resultados[6].pts
-            self.js.document.getElementById('apg7').innerHTML = resultados[6].ast
-            self.js.document.getElementById('rpg7').innerHTML = resultados[6].reb
-            self.js.document.getElementById('nombre_jugador_8').innerHTML = resultados[7].nombre
-            self.js.document.getElementById('ppg8').innerHTML = resultados[7].pts
-            self.js.document.getElementById('apg8').innerHTML = resultados[7].ast
-            self.js.document.getElementById('rpg8').innerHTML = resultados[7].reb
-            self.js.document.getElementById('nombre_jugador_9').innerHTML = resultados[8].nombre
-            self.js.document.getElementById('ppg9').innerHTML = resultados[8].pts
-            self.js.document.getElementById('apg9').innerHTML = resultados[8].ast
-            self.js.document.getElementById('rpg9').innerHTML = resultados[8].reb
+        elif len(self.resultados) >= 9:
+            self.mostrar_resultados(1, 0, 'b')
+            self.mostrar_resultados(2, 1, 'b')
+            self.mostrar_resultados(3, 2, 'b')
+            self.mostrar_resultados(4, 3, 'b')
+            self.mostrar_resultados(5, 4, 'b')
+            self.mostrar_resultados(6, 5, 'b')
+            self.mostrar_resultados(7, 6, 'b')
+            self.mostrar_resultados(8, 7, 'b')
+            self.mostrar_resultados(9, 8, 'b')
 
     def buscar_equipo(self):
         pass
+
+    def buscar_lideres(self):
+        estadistica = str(self.js.document.getElementById('sel-estadistica').value)
+        self.resultados_lideres = lideres(estadistica)
+        self.js.console.log(self.resultados_lideres)
+        for i in range(6):
+            if estadistica == 'STL' or estadistica == 'BLK' or estadistica == '3P' or estadistica == '3P%' or estadistica == 'FG%':
+                self.mostrar_resultados(i, i+1, 'l', estadistica)
+            else:
+                self.mostrar_resultados(1, 0, 'l')
                 
 
 @app.route('/', methods=['POST', 'GET'])

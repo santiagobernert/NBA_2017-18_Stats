@@ -25,7 +25,7 @@ equipos = {
     'new york knicks': 'NYK',
     'oklahoma thunder': 'OKC',
     'orlando magic': 'ORL',
-    'philadelphia sixers': 'PHI',
+    'philadelphia 76ers': 'PHI',
     'phoenix suns': 'PHO',
     'portland trail blazers': 'POR',
     'sacramento kings': 'SAC',
@@ -33,64 +33,6 @@ equipos = {
     'toronto raptors': 'TOR',
     'utah jazz': 'UTH',
     'washington wizards': 'WAS',
-}
-
-jugadores = {
-
-    'j1': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j2': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j3': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j4': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j5': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j6': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j7': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j8': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
-    'j9': {
-        'nombre': '',
-        'ppg': '',
-        'apg': '',
-        'rpg': '',
-    },
 }
 
 
@@ -102,34 +44,4 @@ pos = {
     'Ala-Pivot': 'PF', 
     'Pivot': 'C'
 }
-
-def buscar_jug():
-    equipo = str(input('Equipo: '))       #str(App.input_equipos.value)
-    posicion = str(input('Posicion: '))      #App.js.document.getElementById('sel-posicion')
-    nombre = str(input('Nombre: '))        #App.js.document.getElementById('search-input')
-
-    pos = {
-        'Todas':'PG SG SF PF C',
-        'Base': 'PG',
-        'Escolta': 'SG',
-        'Alero': 'SF',
-        'Ala-Pivot': 'PF', 
-        'Pivot': 'C'
-    }
-
-    for i in jg:
-        if nombre.upper() in i.nombre.upper() and i.pos in pos[posicion] and equipo.upper() in i.equipo:
-            print('Jugador encontrado')
-            print(i.nombre, i.pos, i.equipo, i.pts)
-        elif equipo.upper() != '' and equipo.upper() in i.equipo:
-            if pos[posicion] in i.pos:
-                print(f'Todos los {posicion} de {equipo}')
-                print(i.nombre, i.pos, i.equipo, i.pts)
-            else:
-                print('Jugadores de: ', equipo)
-                print(i.nombre, i.pos, i.equipo, i.pts)
-        elif i.pos in pos[posicion] and equipo == '':
-            print('Todos los ', posicion)
-            print(i.nombre, i.pos, i.equipo, i.pts)
-
 

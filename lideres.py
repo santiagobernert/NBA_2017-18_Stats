@@ -1,10 +1,11 @@
 from jugador import Jugador
-from bigdata import app
-import pandas as pd, os
+from bigdata import jugadores as jg, df
 
-
-
-carpeta = os.path.dirname('E:/Santi/app/Python/data science/nba/')
-
-df = pd.read_csv(f'{carpeta}/NBA Players Stats 201718.csv')
-
+def lideres(estadistica):
+    resultados = []
+    df.sort_values(estadistica)
+    rank_lideres = [*df.iloc[[0, 1, 2, 3, 4], [0]]]
+    for i in range(len(jg)-10):
+        if jg[i].rank in rank_lideres:
+            resultados.append[i]
+    return resultados

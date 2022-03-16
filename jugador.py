@@ -1,3 +1,4 @@
+# Clase Jugador
 class Jugador:
     def __init__(self, rank, nombre, pos, edad, equipo, partidos, partidos_e, minutos, tiros_m,
                     tiros_i, tiros_p, triples_m, triples_i, triples_p, dobles_m, dobles_i,
