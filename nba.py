@@ -6,10 +6,6 @@ from buscar import equipos, pos
 from lideres import lideres
 
 
-
-
-nombre_jugador = 'Davis'
-
 app = Flask(__name__)
 
 @jsf.use(app)
@@ -19,8 +15,10 @@ class App:
         self.resultados_equipos = []
         self.resultados_lideres = []
 
-    def mostrar_resultados(self, box_jugador, resultados_index, page, estadistica=''):
-        if page == 'b':
+    #mostrar resultados en la página
+    def mostrar_resultados(self, box_jugador, resultados_index, page='', estadistica=''):
+        resultados = []
+        if page == '':
             resultados = self.resultados_buscar
         elif page == 'e':
             resultados = self.resultados_equipos
@@ -37,29 +35,32 @@ class App:
                 self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].tiros_p
             else:
                 self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].tiros_p
-        if estadistica == '3P':
+        elif estadistica == '3P':
             if resultados[resultados_index].triples_m >= resultados[resultados_index].ast:
                 self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_m
             else:
                 self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_m
-        if estadistica == '3P%':
+        elif estadistica == '3P%':
             if resultados[resultados_index].triples_p >= resultados[resultados_index].ast:
                 self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_p
             else:
                 self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_p
-        if estadistica == 'BLK':
+        elif estadistica == 'BLK':
             if resultados[resultados_index].blk >= resultados[resultados_index].ast:
                 self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].blk
             else:
                 self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].blk
-        if estadistica == 'STL':
+        elif estadistica == 'STL':
             if resultados[resultados_index].stl >= resultados[resultados_index].ast:
                 self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].stl
             else:
                 self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].stl
     
+    
+    
+    #buscar jugador en la lista de jugadores de bigdata.py
     def buscar_jugador(self):
-        self.resultados.clear()
+        self.resultados_buscar.clear()
         equipo = str(self.js.document.getElementById('equipo-search-input').value)
         posicion = str(self.js.document.getElementById('sel-posicion').value)
         nombre = str(self.js.document.getElementById('search-input').value)
@@ -68,91 +69,65 @@ class App:
             self.js.document.getElementById(f'jug{i}').style.visibility = 'hidden'
 
         for i in jg:
-            if nombre != '' and nombre.upper() in i.nombre.upper():# and i.pos in pos[posicion] and equipos[equipo.lower()] in i.equipo:
+            if nombre != '' and nombre.upper() in i.nombre.upper():
                 if equipo != 'Todos' and equipos[equipo.lower()] in i.equipo:
-                    self.resultados.append(i)
+                    self.resultados_buscar.append(i)
                 elif posicion != 'Todas' and i.pos in pos[posicion]:
-                    self.resultados.append(i)
+                    self.resultados_buscar.append(i)
                 elif posicion == 'Todas' and equipo == 'Todos':
-                    self.resultados.append(i)
+                    self.resultados_buscar.append(i)
             elif nombre == '' and equipo != 'Todos' and equipos[equipo.lower()] in i.equipo and pos[posicion] in i.pos:
-                self.resultados.append(i)
+                self.resultados_buscar.append(i)
             elif nombre == '' and equipo != 'Todos' and equipos[equipo.lower()] in i.equipo and posicion == 'Todas':
-                self.resultados.append(i)
+                self.resultados_buscar.append(i)
             elif nombre == '' and i.pos in pos[posicion]:
                 if equipo == 'Todos':
-                    self.resultados.append(i)
+                    self.resultados_buscar.append(i)
 
         
-        if len(self.resultados) == 0:
+        if len(self.resultados_buscar) == 0:
             self.js.document.getElementById('jug2').style.visibility = 'visible'
             self.js.document.getElementById('nombre_jugador_2').innerHTML = 'No se encontró al jugador'
         
-        elif len(self.resultados) == 1:
-            self.mostrar_resultados(2, 0, 'b')
+        elif len(self.resultados_buscar) == 1:
+            self.mostrar_resultados(2, 0)
             
-        elif len(self.resultados) == 2:
-            self.mostrar_resultados(2, 0, 'b')
-            self.mostrar_resultados(5, 1, 'b')
+        elif len(self.resultados_buscar) == 2:
+            self.mostrar_resultados(2, 0)
+            self.mostrar_resultados(5, 1)
                 
-        elif len(self.resultados) == 3:
-            self.mostrar_resultados(2, 0, 'b')
-            self.mostrar_resultados(5, 1, 'b')
-            self.mostrar_resultados(8, 2, 'b')
+        elif len(self.resultados_buscar) == 3:
+            self.mostrar_resultados(2, 0)
+            self.mostrar_resultados(5, 1)
+            self.mostrar_resultados(8, 2)
 
-        elif len(self.resultados) == 4:
-            self.mostrar_resultados(1, 0, 'b')
-            self.mostrar_resultados(2, 1, 'b')
-            self.mostrar_resultados(3, 2, 'b')
-            self.mostrar_resultados(5, 3, 'b')
+        elif len(self.resultados_buscar) == 4:
+            for i in range(len(resultados)-1):
+                self.mostrar_resultados(i+1, i)
+            self.mostrar_resultados(5, 3)
 
-        elif len(self.resultados) == 5:
-            self.mostrar_resultados(1, 0, 'b')
-            self.mostrar_resultados(2, 1, 'b')
-            self.mostrar_resultados(3, 2, 'b')
-            self.mostrar_resultados(4, 3, 'b')
-            self.mostrar_resultados(5, 4, 'b')
+        elif len(self.resultados_buscar) == 5:
+            for i in range(len(resultados)):
+                self.mostrar_resultados(i+1, i)
 
-        elif len(self.resultados) == 6:
-            self.mostrar_resultados(1, 0, 'b')
-            self.mostrar_resultados(2, 1, 'b')
-            self.mostrar_resultados(3, 2, 'b')
-            self.mostrar_resultados(4, 3, 'b')
-            self.mostrar_resultados(5, 4, 'b')
-            self.mostrar_resultados(6, 5, 'b')
+        elif len(self.resultados_buscar) == 6:
+            for i in range(len(resultados)):
+                self.mostrar_resultados(i+1, i)
 
-        elif len(self.resultados) == 7:
-            self.mostrar_resultados(1, 0, 'b')
-            self.mostrar_resultados(2, 1, 'b')
-            self.mostrar_resultados(3, 2, 'b')
-            self.mostrar_resultados(4, 3, 'b')
-            self.mostrar_resultados(5, 4, 'b')
-            self.mostrar_resultados(6, 5, 'b')
-            self.mostrar_resultados(8, 6, 'b')
+        elif len(self.resultados_buscar) == 7:
+            for i in range(len(resultados)-1):
+                self.mostrar_resultados(i+1, i)
+            self.mostrar_resultados(8, 6)
 
-        elif len(self.resultados) == 8:
-            self.mostrar_resultados(1, 0, 'b')
-            self.mostrar_resultados(2, 1, 'b')
-            self.mostrar_resultados(3, 2, 'b')
-            self.mostrar_resultados(4, 3, 'b')
-            self.mostrar_resultados(5, 4, 'b')
-            self.mostrar_resultados(6, 5, 'b')
-            self.mostrar_resultados(7, 6, 'b')
-            self.mostrar_resultados(8, 7, 'b')
+        elif len(self.resultados_buscar) == 8:
+            for i in range(len(resultados)):
+                self.mostrar_resultados(i+1, i)
 
-        elif len(self.resultados) >= 9:
-            self.mostrar_resultados(1, 0, 'b')
-            self.mostrar_resultados(2, 1, 'b')
-            self.mostrar_resultados(3, 2, 'b')
-            self.mostrar_resultados(4, 3, 'b')
-            self.mostrar_resultados(5, 4, 'b')
-            self.mostrar_resultados(6, 5, 'b')
-            self.mostrar_resultados(7, 6, 'b')
-            self.mostrar_resultados(8, 7, 'b')
-            self.mostrar_resultados(9, 8, 'b')
+        elif len(self.resultados_buscar) >= 9:
+            for i in range(9):
+                self.mostrar_resultados(i+1, i)
 
-    def buscar_equipo(self):
-        pass
+
 
     def buscar_lideres(self):
         estadistica = str(self.js.document.getElementById('sel-estadistica').value)
@@ -167,7 +142,7 @@ class App:
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    return App.render(render_template('nba.html', nombre_jugador=nombre_jugador))
+    return App.render(render_template('nba.html'))
 
 if __name__ == '__main__':
     app.run(debug=True)
