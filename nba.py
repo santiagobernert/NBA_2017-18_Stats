@@ -84,9 +84,9 @@ class App:
                 if equipo == 'Todos':
                     self.resultados_buscar.append(i)
 
-        
+        #mostrar en pantalla según la cantidad de resultados
         if len(self.resultados_buscar) == 0:
-            self.js.document.getElementById('jug2').style.visibility = 'visible'
+            self.js.document.getElementById('nombre_jugador_2').style.visibility = 'visible'
             self.js.document.getElementById('nombre_jugador_2').innerHTML = 'No se encontró al jugador'
         
         elif len(self.resultados_buscar) == 1:

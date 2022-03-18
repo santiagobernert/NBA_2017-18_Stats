@@ -3,13 +3,14 @@ from bigdata import jugadores as jg, df
 
 def lideres(estadistica):
     resultados = []
-    df.sort_values(estadistica)
-    rank_lideres = [ *df.iloc
-    for i in jg:
-        if i.rank in rank_lideres:
-            resultados.append(i)
+    rank_lideres = [ *df.sort_values(estadistica, ascending=False).head(5)['Rk'] ]
+    for i in range(len(rank_lideres)):
+        for j in jg:
+            if j.rank == rank_lideres[i]:
+                resultados.append(j)
     print(rank_lideres)
-    print (i.nombre for i in resultados)
+    for i in resultados:
+        print(f'{i.nombre}: {estadistica}')
     return resultados
 
-lideres('BLK')
+#lideres('BLK')

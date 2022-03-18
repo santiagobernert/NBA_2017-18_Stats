@@ -19,17 +19,6 @@
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-            </li>
-        </ul>
         </div>
     </div>
 </nav>
@@ -450,7 +439,7 @@
         <div class="row g-3">
           <h4 class="col text-end">Lideres en</h4>
           <div class="dropdown col text-start">
-            <select onchange="server.buscar_lideres()" id="sel-estadistica" class="form-select" aria-label="Default select example">
+            <select onchange="server.buscar_lideres()" id="sel-estadistica" class="form-select" aria-label="Default select example" style="max-width: 15vw;">
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <option selected value="PTS">Puntos</option> 
                 <option value="AST">Asistencias</option> 
