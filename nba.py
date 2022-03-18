@@ -46,15 +46,15 @@ class App:
             else:
                 self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].triples_p
         elif estadistica == 'BLK':
-            if resultados[resultados_index].blk >= resultados[resultados_index].ast:
-                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].blk
+            if resultados[resultados_index].tap >= resultados[resultados_index].ast:
+                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].tap
             else:
-                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].blk
+                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].tap
         elif estadistica == 'STL':
-            if resultados[resultados_index].stl >= resultados[resultados_index].ast:
-                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].stl
+            if resultados[resultados_index].rob >= resultados[resultados_index].ast:
+                self.js.document.getElementById('apg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].rob
             else:
-                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].stl
+                self.js.document.getElementById('rpg'+ page + str(box_jugador)).innerHTML = resultados[resultados_index].rob
     
     
     
@@ -102,25 +102,25 @@ class App:
             self.mostrar_resultados(8, 2)
 
         elif len(self.resultados_buscar) == 4:
-            for i in range(len(resultados)-1):
+            for i in range(len(self.resultados_buscar)-1):
                 self.mostrar_resultados(i+1, i)
             self.mostrar_resultados(5, 3)
 
         elif len(self.resultados_buscar) == 5:
-            for i in range(len(resultados)):
+            for i in range(len(self.resultados_buscar)):
                 self.mostrar_resultados(i+1, i)
 
         elif len(self.resultados_buscar) == 6:
-            for i in range(len(resultados)):
+            for i in range(len(self.resultados_buscar)):
                 self.mostrar_resultados(i+1, i)
 
         elif len(self.resultados_buscar) == 7:
-            for i in range(len(resultados)-1):
+            for i in range(len(self.resultados_buscar)-1):
                 self.mostrar_resultados(i+1, i)
             self.mostrar_resultados(8, 6)
 
         elif len(self.resultados_buscar) == 8:
-            for i in range(len(resultados)):
+            for i in range(len(self.resultados_buscar)):
                 self.mostrar_resultados(i+1, i)
 
         elif len(self.resultados_buscar) >= 9:
@@ -132,12 +132,9 @@ class App:
     def buscar_lideres(self):
         estadistica = str(self.js.document.getElementById('sel-estadistica').value)
         self.resultados_lideres = lideres(estadistica)
-        self.js.console.log(self.resultados_lideres)
-        for i in range(6):
-            if estadistica == 'STL' or estadistica == 'BLK' or estadistica == '3P' or estadistica == '3P%' or estadistica == 'FG%':
-                self.mostrar_resultados(i, i+1, 'l', estadistica)
-            else:
-                self.mostrar_resultados(1, 0, 'l')
+        for i in range(1,6):
+            self.mostrar_resultados(i, i-1, 'l', estadistica)
+            
                 
 
 @app.route('/', methods=['POST', 'GET'])
