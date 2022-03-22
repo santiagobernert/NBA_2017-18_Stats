@@ -128,12 +128,19 @@ class App:
                 self.mostrar_resultados(i+1, i)
 
 
-
+    # buscar lideres de la estadistica seleccionada
     def buscar_lideres(self):
-        estadistica = str(self.js.document.getElementById('sel-estadistica').value)
+        estadistica = str(self.js.document.getElementById('sel-estadistica-lid').value)
         self.resultados_lideres = lideres(estadistica)
         for i in range(1,6):
             self.mostrar_resultados(i, i-1, 'l', estadistica)
+
+    # buscar el equipo que mejor sea en la estadistica seleccionada
+    def buscar_equipo(self):
+        estadistica = str(self.js.document.getElementById('sel-estadistica-eq').value)
+        self.resultados_equipos = equipos(estadistica)
+        for i in range(1,6):
+            self.mostrar_resultados(i, i-1, 'e')
             
                 
 

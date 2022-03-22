@@ -1,6 +1,7 @@
 from jugador import Jugador
 from bigdata import jugadores as jg, df
 
+# funcion que devuelve la lista de los 5 jugadores lideres en la estadistica seleccionada
 def lideres(estadistica):
     if estadistica != 'Seleccionar':
         resultados = []
@@ -17,5 +18,3 @@ def lideres(estadistica):
         for i in resultados:
             print(f'{i.nombre}: {estadistica}')
         return resultados
-
-#lideres('BLK')
