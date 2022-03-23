@@ -143,7 +143,7 @@ class App:
         print(f'buscar equipos por {estadistica}')
         self.resultados_equipos = equipo(estadistica)
         for i in range(1,6):
-            self.mostrar_resultados(i, i-1, 'e')
+            self.mostrar_resultados(i, i-1, 'e', estadistica)
             
                 
 
