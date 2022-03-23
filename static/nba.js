@@ -54,3 +54,7 @@ function buscar_jugador() {
     }
         
 }
+
+function cns() {
+    console.log('equipos la concha de tu madre')
+}

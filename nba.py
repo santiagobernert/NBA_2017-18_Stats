@@ -4,6 +4,7 @@ from jugador import Jugador
 from bigdata import jugadores as jg, df
 from buscar import equipos, pos
 from lideres import lideres
+from equipos import equipo
 
 
 app = Flask(__name__)
@@ -131,6 +132,7 @@ class App:
     # buscar lideres de la estadistica seleccionada
     def buscar_lideres(self):
         estadistica = str(self.js.document.getElementById('sel-estadistica-lid').value)
+        print(f'buscar lideres por {estadistica}')
         self.resultados_lideres = lideres(estadistica)
         for i in range(1,6):
             self.mostrar_resultados(i, i-1, 'l', estadistica)
@@ -138,7 +140,8 @@ class App:
     # buscar el equipo que mejor sea en la estadistica seleccionada
     def buscar_equipo(self):
         estadistica = str(self.js.document.getElementById('sel-estadistica-eq').value)
-        self.resultados_equipos = equipos(estadistica)
+        print(f'buscar equipos por {estadistica}')
+        self.resultados_equipos = equipo(estadistica)
         for i in range(1,6):
             self.mostrar_resultados(i, i-1, 'e')
             
